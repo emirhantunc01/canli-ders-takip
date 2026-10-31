@@ -27,3 +27,13 @@ Windows NSIS paketi kullanıcı başına kurulur; masaüstü ve Başlat menüsü
 receivables, ödeme kayıtlarından bağımsız pozitif hak edişlerdir. Hesap: yapılan ders ücretleri + elle girilen birikmiş alacak − tahsilatlar. Kuruş hesabı tam sayılarla yapılır. Tarih, kurum ve tutar doğrulanır; düzenleme/silme toplamı yeniden hesaplatır. Çifte sayımı önlemek için geçmiş tutara dahil dersleri tekrar girmeme açıklaması formda bulunur.
 
 v1 dosyaları açılır; receivables içeren dosya ve dışa aktarımlar v2'dir. v2'de receivables zorunlu dizi olarak doğrulanır ve dosya deposunun snapshot'ına dahil edilir. Eski uygulama v2'yi reddederek sessiz veri kaybını önler. Mevcut kayıtlar yerinde korunur; kullanıcı tutarı kendisi girer.
+
+## Android sürümü (1.3)
+
+Android 8+ native Activity/WebViewAssetLoader kabuğu, yerel `https://appassets.androidplatform.net/assets/www/index.html` kaynağını açar. Uzak kaynaklar 403 ile engellenir, harici gezinme ve izin istekleri reddedilir; INTERNET izni yoktur. JS köprüsü yalnızca kayıt yükle/kaydet, belge dışa aktar ve uygulamayı arka plana al komutlarına sahiptir. Kullanıcı içeriği React tarafından metin olarak işlenir; içe alınan JSON çalıştırılmaz.
+
+Telefon deposu SQLite snapshots tablosunda current ve previous alanlarını tek işlemde yazar. Native doğrulama kurum/tarih/saat/öğrenci/tutar kurallarını tekrar uygular. `synchronous=FULL` kullanılır. JS tarafı SQLite yazımı onaylanmadan UI verisini değiştirmez. Hatalar boş veriye çevrilmez.
+
+Android ACTION_CREATE_DOCUMENT dışa aktarma ve ACTION_OPEN_DOCUMENT içe aktarma akışı kullanılır. Dosya sağlayıcısının write/flush/close işlemlerinin tümü tamamlandıktan sonra başarı olayı yayınlanır. İptal başarı sayılmaz. İçe aktarma masaüstündeki v1/v2 doğrulama ve açık değiştirme onayını korur. APK özel kayıt veya imza anahtarı içermez.
+
+Mobil görünüm alt gezinme, 44+px kontrol alanları, liste varsayılanı, tek sütun ödeme hesapları ve kaydırılabilir diyaloglar kullanır. Masaüstü takvim görünümü korunur. Android geri tuşu açık diyalog/menüyü kapatır, ana ekrana döner veya uygulamayı arka plana alır.

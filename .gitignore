@@ -6,3 +6,10 @@ playwright-report/
 *.tsbuildinfo
 desktop-dist/
 release/
+android/.gradle/
+android/local.properties
+android/**/build/
+.local/
+*.jks
+*.keystore
+android/app/src/main/assets/www/

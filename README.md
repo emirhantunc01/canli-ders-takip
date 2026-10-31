@@ -53,3 +53,34 @@ npm run package:win
 Ödemeler ekranında ilgili hesabın **Birikmiş alacak ekle** düğmesini kullanarak uygulamaya geçmeden önce içeride biriken tutarı girin. Örneğin 5.000 TL alacak ve ardından 1.500 TL ödeme kaydı, 3.500 TL kalan alacak oluşturur. Yeni yapılan dersler ayrıca hak edişe eklenir; birikmiş tutara dahil eski dersleri tekrar girmeyin. Alacak kayıtları tarih ve açıklamayla düzenlenebilir/silinebilir; ay filtresine dahildir. Bu tutar tahsilat değildir.
 
 Yedekler artık v2 biçiminde dersler, ödemeler ve birikmiş alacakları içerir. Eski v1 yedekler/veri dosyaları açılır. Alacak içeren yeni yedekleri eski uygulama sürümüyle açmayın; eski sürüm bunları reddeder.
+
+## Android telefon sürümü (1.3)
+
+Hazır paket: `release/DersDefteri-Android.apk`. Android 8 veya üzeri ve güncel Android System WebView gerekir. APK'yi telefona aktarın, dosyaya dokunup Android'in gösterdiği kurulum adımlarını izleyin. İnternet hesabı veya sunucu gerekmez; kayıtlar yalnızca telefondadır. Windows sürümüyle otomatik eşitleme yoktur.
+
+**Mevcut kayıtları taşıma:** Windows uygulamasında Yedekleme bölümünden JSON yedeği indirin. Dosyayı telefona aktarın. Android uygulamasında **Yedekleme → Yedek dosyası seç** ile seçip onaylayın. Bu işlem telefondaki mevcut kayıtların tamamını değiştirir. Telefon değiştirirken veya uygulamayı kaldırmadan önce **JSON yedeğini indir** ile Android dosya seçicisinden güvenli bir klasöre yedek kaydedin. Uygulama kaldırılınca özel veri alanı silinir.
+
+Android kayıtları özel SQLite veritabanında tutulur; işlem tamamlanmadan başarı gösterilmez. Önceki kayıt sürümü aynı işlem içinde korunur. JSON yedek v1/v2 biçimi masaüstüyle uyumludur. Alacak, ödeme, öğrenci ve ders tutarları aynı kurallarla hesaplanır. APK kullanıcı verisi içermez ve internet/depolama izinleri istemez; dışa aktarma/içe aktarma yalnızca seçtiğiniz belgeyle çalışır.
+
+### Android derleme ve test
+
+Java 17, Android SDK 34 ve Build Tools, `ANDROID_HOME` ve `JAVA_HOME` ayarları gerekir.
+
+```powershell
+npm ci
+npm run build:android
+```
+
+İlk derleme `.local/` içinde yerel imza anahtarı üretir. **Bu klasörü güvenli biçimde yedekleyin; sonraki APK güncellemeleri aynı anahtarla imzalanmalıdır.** Klasör ve parolalar Git'e gönderilmez. Gradle wrapper bağımlılıkları ilk derlemede indirilir.
+
+```powershell
+npm test
+.\android\gradlew.bat -p android testDebugUnitTest
+npm run test:android:native
+npm run build:android:debug
+npx playwright install android
+adb -s emulator-5554 install -r release/DersDefteri-Android-Test.apk
+npm run test:android:ui
+```
+
+Telefon UI testi yalnızca `emulator-*` cihazını seçer; testten önceki emülatör kayıtlarını geri yükler. Native testler ayrı bir test veritabanı kullanır. Release APK'de WebView geliştirici bağlantısı kapalıdır. Kaynakların mobil varlık dosyaları üretildiği için Git'e dahil edilmez; derleme `dist/` çıktısını Android varlıklarına kopyalar. SHA256 kontrol dosyası APK yanında üretilir.

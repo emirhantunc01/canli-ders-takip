@@ -21,3 +21,9 @@ React arayüzü yerel paketlenmiş dosyadan Electron penceresinde açılır; HTT
 Uygulama verisi %APPDATA%/DersDefteri/records.json dosyasında sürümlü JSON'dur. Geçerli eski kayıt önce records.previous.json olarak korunur; yeni kayıt fsync+rename ile atomik değiştirilir. Dosya yazımları sıraya alınır ve başarısızlıkta UI durumu güncellenmez. Geçersiz/bozuk dosya sessiz sıfırlanmaz. Eski IndexedDB verisi JSON aktarımıyla taşınır; web önizlemesindeki veri alanı ayrıdır.
 
 Windows NSIS paketi kullanıcı başına kurulur; masaüstü ve Başlat menüsü kısayolu oluşturur. Kurulumdan bağımsız win-unpacked klasörü de çalışır. İmza sertifikası/otomatik güncelleme yoktur.
+
+## Birikmiş alacak kayıtları (1.2)
+
+receivables, ödeme kayıtlarından bağımsız pozitif hak edişlerdir. Hesap: yapılan ders ücretleri + elle girilen birikmiş alacak − tahsilatlar. Kuruş hesabı tam sayılarla yapılır. Tarih, kurum ve tutar doğrulanır; düzenleme/silme toplamı yeniden hesaplatır. Çifte sayımı önlemek için geçmiş tutara dahil dersleri tekrar girmeme açıklaması formda bulunur.
+
+v1 dosyaları açılır; receivables içeren dosya ve dışa aktarımlar v2'dir. v2'de receivables zorunlu dizi olarak doğrulanır ve dosya deposunun snapshot'ına dahil edilir. Eski uygulama v2'yi reddederek sessiz veri kaybını önler. Mevcut kayıtlar yerinde korunur; kullanıcı tutarı kendisi girer.

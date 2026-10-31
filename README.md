@@ -47,3 +47,9 @@ npm run package:win
 ```
 
 `npm run dev` yalnızca tarayıcı önizlemesi içindir; burada kayıtlar IndexedDB'dedir. Masaüstünde dosya deposu kullanılır. Electron testleri ayrı geçici profil kullanır ve gerçek kullanıcı kayıtlarına yazmaz. Paketler `release/` dizinine çıkar; kaynak repoya kullanıcı verisi veya exe eklenmez. Windows kurulum paketi imzasızdır.
+
+## Birikmiş alacak (1.2)
+
+Ödemeler ekranında ilgili hesabın **Birikmiş alacak ekle** düğmesini kullanarak uygulamaya geçmeden önce içeride biriken tutarı girin. Örneğin 5.000 TL alacak ve ardından 1.500 TL ödeme kaydı, 3.500 TL kalan alacak oluşturur. Yeni yapılan dersler ayrıca hak edişe eklenir; birikmiş tutara dahil eski dersleri tekrar girmeyin. Alacak kayıtları tarih ve açıklamayla düzenlenebilir/silinebilir; ay filtresine dahildir. Bu tutar tahsilat değildir.
+
+Yedekler artık v2 biçiminde dersler, ödemeler ve birikmiş alacakları içerir. Eski v1 yedekler/veri dosyaları açılır. Alacak içeren yeni yedekleri eski uygulama sürümüyle açmayın; eski sürüm bunları reddeder.

@@ -1,0 +1,10 @@
+import {it,expect} from 'vitest';
+import {balance,parseBackup} from '../src/domain';
+const manual=[{id:'r',kind:'center' as const,date:'2026-10-01',amount:5000,note:'Önceki derslerden birikmiş'}];
+const paid=[{id:'p',kind:'center' as const,date:'2026-10-31',amount:1500,note:''}];
+it('birikmiş alacaktan tahsilatı düşer, iki hesabı ayırır',()=>{expect(balance([],paid,'center',undefined,manual).due).toBe(3500);expect(balance([],paid,'live',undefined,manual).due).toBe(0)});
+it('elle alacak, yapılan ders ve kuruşlu ödemeyi birlikte hesaplar',()=>{const lesson={id:'l',kind:'center' as const,students:['Ada'],grade:'8',topic:'Cebir',date:'2026-10-31',start:'10:00',end:'10:40',status:'done' as const,note:''};expect(balance([lesson],[{...paid[0],amount:1500.25}],'center',undefined,manual)).toEqual({earned:5200,paid:1500.25,due:3699.75,advance:0,count:1});expect(balance([],[{...paid[0],amount:5500}],'center',undefined,manual).advance).toBe(500)});
+it('alacak düzenleme/silme ve dönem filtresi bakiyeye yansır',()=>{expect(balance([],paid,'center',undefined,[{...manual[0],amount:6000}]).due).toBe(4500);expect(balance([],paid,'center',undefined,[]).advance).toBe(1500);expect(balance([],paid,'center','2026-11',manual).earned).toBe(0)});
+it('v2 yedek alacakları korur, v1 eski dosyalar açılır',()=>{expect(parseBackup(JSON.stringify({version:2,lessons:[],payments:paid,receivables:manual})).receivables).toEqual(manual);expect(parseBackup(JSON.stringify({version:1,lessons:[],payments:[]})).lessons).toEqual([])});
+it.each([-1,0,1.123,NaN])('geçersiz alacak tutarını reddeder %s',amount=>{expect(()=>parseBackup(JSON.stringify({version:2,lessons:[],payments:[],receivables:[{...manual[0],amount}]}))).toThrow()});
+it('alacaksız v2 ve tekrarlı kimlikleri reddeder',()=>{expect(()=>parseBackup(JSON.stringify({version:2,lessons:[],payments:[]}))).toThrow();expect(()=>parseBackup(JSON.stringify({version:2,lessons:[],payments:[],receivables:[manual[0],manual[0]]}))).toThrow()});

@@ -16,12 +16,12 @@ export class FileStore {
  async load():Promise<Data>{await this.pending;return (await this.read()).data}
  async save(data:Data):Promise<void>{
   // Validate and snapshot before queuing, so later mutations cannot change a pending write.
-  const snapshot=parseBackup(JSON.stringify({version:1,lessons:data?.lessons,payments:data?.payments}));
+  const snapshot=parseBackup(JSON.stringify({version:data?.receivables===undefined?1:2,lessons:data?.lessons,payments:data?.payments,...(data?.receivables===undefined?{}:{receivables:data.receivables})}));
   const operation=this.pending.then(async()=>{
    await mkdir(this.directory,{recursive:true});
    const old=await this.read(); // Never overwrite an unreadable/corrupt existing file.
    if(old.raw!==null)await this.atomicWrite(join(this.directory,'records.previous.json'),old.raw);
-   await this.atomicWrite(this.path,JSON.stringify({version:1,...snapshot},null,2));
+   await this.atomicWrite(this.path,JSON.stringify({version:snapshot.receivables===undefined?1:2,...snapshot},null,2));
   });
   this.pending=operation.catch(()=>{});
   return operation;

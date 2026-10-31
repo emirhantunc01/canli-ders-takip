@@ -20,3 +20,4 @@
 /* Calendar axes and date padding use compact tabular figures. */
 .segments button.selected{box-shadow:none;outline:1px solid #e5e7eb}
 @media(max-width:760px){.account-values span{font-size:12px}.account-values b{font-size:14px}.account-title{font-size:14px}.legend>span,.legend select{font-size:12px}.calendar-toolbar{align-items:flex-start}.date-nav{flex-wrap:wrap}.date-nav h2{white-space:normal}.lesson-name{font-size:14px}.lesson-topic,.lesson-meta,.lesson-time{font-size:12px}.rail-info p,.today-empty p{font-size:13px}.page-header p{font-size:12px}.right-rail .text-button{font-size:13px}.period-totals,.payment-row{font-size:13px}.form-grid label{font-size:13px}}
+.ledger-actions{display:flex;gap:10px;flex-wrap:wrap}.ledger-actions>button{flex:1;white-space:nowrap;font-size:12px}.receivables-list{margin-bottom:24px}.manual-empty{padding:20px 0 4px;color:var(--muted);font-size:13px}

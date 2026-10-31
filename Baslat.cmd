@@ -1,13 +1,10 @@
 @echo off
 cd /d "%~dp0"
-where node >nul 2>nul
-if errorlevel 1 (
-  echo Node.js 22 veya ustu kurulmali.
-  pause
-  exit /b 1
+if exist "release\win-unpacked\Ders Defteri.exe" (
+  start "" "release\win-unpacked\Ders Defteri.exe"
+  exit /b 0
 )
-if not exist node_modules (
-  call npm install
-  if errorlevel 1 (pause & exit /b 1)
-)
-node scripts/start.mjs
+echo Hazir masaustu paketi bulunamadi.
+echo Once npm install ve npm run package:win komutlariyla Windows paketini olusturun.
+echo Veya DersDefteri-Kurulum.exe ile uygulamayi kurun.
+pause

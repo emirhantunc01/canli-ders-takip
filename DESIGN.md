@@ -13,3 +13,11 @@ Takvim çalışma alanı, iki bağımsız hesap özeti ve bugün listesi. Achrom
 Doğrulama: ücret/bakiye/yedek ve IndexedDB testleri; Chrome uçtan uca akışlar ve 1440/768/390 piksel görüntüler.
 
 Görsel kontrol notları: Boş takvimde veri rengi uyarısı beklenir; sahte ders eklenmez. Sağdaki bugün akışı takvimle aynı boyda esnetilmez; içeriği kadar yer kaplar. Takvim ekseni ve yardımcı bilgiler 11–12 px, ana kayıt etiketleri 13–14 px tutulur. Son ölçümde hata yoktur; bu üç bağlamsal uyarı kabul edilmiştir.
+
+## Windows masaüstü sürümü (1.1)
+
+React arayüzü yerel paketlenmiş dosyadan Electron penceresinde açılır; HTTP sunucusu kullanılmaz. Preload yalnızca yükle/kaydet köprüsünü sunar; Node erişimi arayüze kapalı, contextIsolation ve sandbox açıktır. IPC çağrılarında ana pencere ve dosya URL'si doğrulanır. Harici gezinme/yeni pencere engellenir. Tek örnek kilidi çakışan dosya yazımlarını engeller.
+
+Uygulama verisi %APPDATA%/DersDefteri/records.json dosyasında sürümlü JSON'dur. Geçerli eski kayıt önce records.previous.json olarak korunur; yeni kayıt fsync+rename ile atomik değiştirilir. Dosya yazımları sıraya alınır ve başarısızlıkta UI durumu güncellenmez. Geçersiz/bozuk dosya sessiz sıfırlanmaz. Eski IndexedDB verisi JSON aktarımıyla taşınır; web önizlemesindeki veri alanı ayrıdır.
+
+Windows NSIS paketi kullanıcı başına kurulur; masaüstü ve Başlat menüsü kısayolu oluşturur. Kurulumdan bağımsız win-unpacked klasörü de çalışır. İmza sertifikası/otomatik güncelleme yoktur.

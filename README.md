@@ -1,33 +1,49 @@
 # Ders Defteri
 
-Kişisel, yerel matematik ders takibi. Veriler yalnızca kullanılan tarayıcının IndexedDB deposunda tutulur. Aynı adres ve tarayıcı profilini kullanın. Tarayıcı verilerini temizlemeden önce yedek indirin.
+Matematik derslerini ve iki ayrı kurumun ödeme hesabını takip eden, internetsiz çalışan Windows masaüstü uygulaması.
 
-## Çalıştırma
+## Windows'ta açma
 
-Node.js 22 veya üzeri kurulu olmalıdır.
+- `release/DersDefteri-Kurulum.exe`: Kurulum sihirbazını çalıştırın. Masaüstüne ve Başlat menüsüne **Ders Defteri** kısayolu eklenir.
+- Kurmadan çalıştırmak için `release/win-unpacked/Ders Defteri.exe` dosyasını açın. Taşırken `win-unpacked` klasörünün tamamını taşıyın.
+- Proje klasöründeki `Baslat.cmd`, hazır masaüstü paketini açar.
 
-```powershell
-npm install
-npm run dev
-```
-
-Ardından http://127.0.0.1:5173 adresini açın. Windows'ta `Baslat.cmd` dosyasına çift tıklamak da uygulamayı başlatır. Terminali kullanım boyunca açık tutun.
-
-## Kontroller
-
-```powershell
-npm test
-npm run build
-npx playwright test
-```
-
-Takvimde tüm dersler, hesaplarda sadece yapılan dersler sayılır. Ödemeler ilgili kurumun hesabına topluca işlenir. Ay özeti o ayın hareketlerini gösterir; tüm zamanların bakiyesi önceki ayları da içerir. JSON geri yükleme mevcut kayıtları bütünüyle değiştirir. Aynı anda tek sekmede kullanın.
+Kullanım sırasında Node.js, terminal, tarayıcı veya yerel web sunucusu gerekmez. Uygulama aynı anda tek pencere/işlem olarak çalışır.
 
 ## Günlük kullanım
 
-1. **Yeni ders** ile ders türünü seçin. Birden fazla öğrenciyi virgülle ayırın; sınıf, tarih, saat ve konuyu doldurun.
-2. Ders bittikten sonra kaydı açıp durumunu **Yapıldı** seçin. Kazanç bu aşamada hesaplanır.
-3. Kurumdan ödeme aldığınızda **Ödemeler → Ödeme ekle** ile kaynağı, tutarı ve tarihi kaydedin.
-4. **Yedekleme** ekranından düzenli JSON yedeği indirin. Geri yükleme eski ve yeni kayıtları birleştirmez; mevcut kayıtları değiştirir.
+1. **Yeni ders** ile ders türünü seçin. Birden fazla öğrenciyi virgülle ayırın; sınıf, tarih, saat ve konuyu girin.
+2. Ders bittikten sonra durumunu **Yapıldı** seçin. Yalnızca yapılan dersler kazanca eklenir.
+3. Dershane her ders için 200 TL; canlı ders tek öğrenci için 200 TL, birden çok öğrenci için dersin toplamı 400 TL hesaplanır. Süre ücretle çarpılmaz.
+4. **Ödemeler → Ödeme ekle** ile kurumdan aldığınız toplu/kısmi ödemeyi kaydedin. İki hesabın bakiyesi ayrıdır; fazla ödeme avans olur.
+5. **Yedekleme** bölümünden düzenli JSON yedeği alın. Geri yükleme mevcut kayıtların tamamını değiştirir; birleştirme yapmaz.
 
-Takvim 00:00–23:59 aralığını destekler ve ilk açılışta 08:00'a kaydırılır. Haftalık takvim dar ekranda yatay kaydırılır. Kayıtlar farklı günlerde düzenlenebilir; dershane için yalnızca ilk tarih önerisi pazardır. Tarayıcı testleri kurulu Google Chrome kullanır.
+## Verilerin saklandığı yer
+
+`%APPDATA%\DersDefteri\records.json`
+
+Her başarılı değişimde önceki sürüm `records.previous.json` olarak korunur. Yazma işlemi önce geçici dosyaya tamamlanır, ardından ana dosya atomik olarak değiştirilir. Bozuk ana dosya sessizce boşaltılmaz veya üzerine yazılmaz. Önce dosyaların bir kopyasını alın; gerekirse uygulama kapalıyken geçerli `records.previous.json` dosyasını `records.json` yerine kopyalayın. Uygulamayı kaldırmak verileri otomatik silmez.
+
+### Önceki tarayıcı sürümünden taşıma
+
+Eski sürümü daha önce kullandığınız aynı tarayıcıda `http://127.0.0.1:5173` adresinden açın (`npm run dev`). **Yedekleme → JSON yedeğini indir** ile kayıtları dışarı alın. Ardından masaüstü uygulamasında **Yedekleme → Yedek dosyası seç** ile bu dosyayı seçip onaylayın. Tarayıcı kayıtları otomatik silinmez. Masaüstü uygulaması tarayıcının kayıt alanını otomatik okuyamaz.
+
+## Geliştirme ve paketleme
+
+Node.js 22.12 veya üzeri, Windows x64:
+
+```powershell
+npm install
+npx install-electron
+npm run desktop
+```
+
+```powershell
+npm test
+npm run build:desktop
+npm run test:desktop
+npx playwright test
+npm run package:win
+```
+
+`npm run dev` yalnızca tarayıcı önizlemesi içindir; burada kayıtlar IndexedDB'dedir. Masaüstünde dosya deposu kullanılır. Electron testleri ayrı geçici profil kullanır ve gerçek kullanıcı kayıtlarına yazmaz. Paketler `release/` dizinine çıkar; kaynak repoya kullanıcı verisi veya exe eklenmez. Windows kurulum paketi imzasızdır.

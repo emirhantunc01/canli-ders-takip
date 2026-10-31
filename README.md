@@ -88,3 +88,7 @@ Telefon UI testi yalnızca `emulator-*` cihazını seçer; testten önceki emül
 ## Glassmorphism güncellemesi (1.4)
 
 Android APK mevcut uygulamanın üzerine güncelleme olarak kurulabilir; versionCode artırılmıştır ve imza anahtarı aynıdır. Uygulamayı kaldırmadan yeni APK'yi kurun. Bu sürümde veri şeması değişmez. Yeni görünüm yarı saydam cam paneller, açık mavi/mint arka plan ve uyumlu diyalog/alt gezinme içerir; blur desteklenmeyen cihazlarda opak yüzeye geçer.
+
+## Yakınlaştırma düzeltmesi (1.4.1)
+
+Android uygulamasında WebView sayfa yakınlaştırması kapalıdır: iki parmakla büyütme ve çift dokunma sayfanın ölçeğini değiştirmez. Dikey kaydırma ve yatay takvim kaydırması korunur. Tarayıcı önizlemesinin viewport kısıtları değiştirilmemiştir; Android sisteminin erişilebilirlik büyüteci bu ayarlardan bağımsızdır. Güncelleme versionCode 3 ve aynı imza anahtarıyla kurulur; veri şeması değişmez.

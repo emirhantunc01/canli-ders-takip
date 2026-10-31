@@ -49,3 +49,7 @@ Bu bölüm önceki achromatic-ledger yüzey kararlarının yerini alır. Kullan�
 - Rakamlar Geistin tabular özelliğini korur. 44px dokunma hedefleri, odak halkaları ve iptal/hata durumları korunur. Hesaplama/kayıt koduna tasarım nedeniyle değişiklik yapılmaz.
 
 Görsel denetim istisnaları: `gradient`, `glass`, `button-fx` ve `heavy-shadow`, kullanıcının açık cam malzeme talebi nedeniyle kabul edilmiştir. Gölge opaklığı %6.5'tir. Yapısal testler, taşma/kontrast ve yazı tipi kontrolleri korunur. Saatli takvimin sabit gün başlığı, arkasındaki saatlerin hayalet gibi görünmemesi için opaktır. Boş takvimde eksen yazılarının 11–12px olması ve kısa bugün panelinin takvim kadar uzatılmaması bilinçli kararlardır.
+
+## Android sayfa ölçeği (1.4.1)
+
+Android kabuğunda `setSupportZoom(false)`, `setBuiltInZoomControls(false)` ve `setDisplayZoomControls(false)` açıkça uygulanır. Web içerik katmanında genel `touch-action:none`, çoklu dokunma engelleyicisi veya tarayıcı erişilebilirliğini bozan global viewport kısıtı kullanılmaz. Native gesture regresyon testi pinch/çift dokunma sonrası ölçeği ve tek parmakla dikey kaydırmayı denetler.

@@ -37,3 +37,15 @@ Telefon deposu SQLite snapshots tablosunda current ve previous alanlarını tek 
 Android ACTION_CREATE_DOCUMENT dışa aktarma ve ACTION_OPEN_DOCUMENT içe aktarma akışı kullanılır. Dosya sağlayıcısının write/flush/close işlemlerinin tümü tamamlandıktan sonra başarı olayı yayınlanır. İptal başarı sayılmaz. İçe aktarma masaüstündeki v1/v2 doğrulama ve açık değiştirme onayını korur. APK özel kayıt veya imza anahtarı içermez.
 
 Mobil görünüm alt gezinme, 44+px kontrol alanları, liste varsayılanı, tek sütun ödeme hesapları ve kaydırılabilir diyaloglar kullanır. Masaüstü takvim görünümü korunur. Android geri tuşu açık diyalog/menüyü kapatır, ana ekrana döner veya uygulamayı arka plana alır.
+
+## Güncel görsel sistem: Glassmorphism (1.4, kullanıcı talebi)
+
+Bu bölüm önceki achromatic-ledger yüzey kararlarının yerini alır. Kullanıcı açıkça glassmorphism istediğinden cam, bulanıklık, yumuşak geçiş ve yüzey parlamaları bu üründe kasıtlıdır; varsayılan tasarım yasağı uygulanmaz.
+
+- Açık mavi/mint sabit arka plan üzerinde yarı saydam beyaz cam paneller. Koyu mavi metin ve koyu, düz birincil eylem; para ve form metinleri yüksek kontrastta.
+- `src/glass.css` materyal katmanını taşır; yerleşim, gezinme ve veri davranışı mevcut bileşenlerde kalır. Kartlar 20–22px, kontroller 11–13px; parlak 1px kenar, yumuşak düşük opaklıklı gölge.
+- Blur yalnızca panel, gezinme ve diyalog katmanlarında; telefon panellerinde 12px. Arka plan statiktir, animasyonlu bulanıklık yoktur. Blur desteklenmiyorsa ve azaltılmış saydamlık tercihinde opak açık yüzey kullanılır.
+- Android sistem çubukları ve başlangıç zemini aynı açık maviyle uyumludur. Sürüm 1.4.0/versionCode 2, mevcut anahtarla imzalanır; veri şeması değişmez.
+- Rakamlar Geistin tabular özelliğini korur. 44px dokunma hedefleri, odak halkaları ve iptal/hata durumları korunur. Hesaplama/kayıt koduna tasarım nedeniyle değişiklik yapılmaz.
+
+Görsel denetim istisnaları: `gradient`, `glass`, `button-fx` ve `heavy-shadow`, kullanıcının açık cam malzeme talebi nedeniyle kabul edilmiştir. Gölge opaklığı %6.5'tir. Yapısal testler, taşma/kontrast ve yazı tipi kontrolleri korunur. Saatli takvimin sabit gün başlığı, arkasındaki saatlerin hayalet gibi görünmemesi için opaktır. Boş takvimde eksen yazılarının 11–12px olması ve kısa bugün panelinin takvim kadar uzatılmaması bilinçli kararlardır.

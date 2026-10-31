@@ -4,6 +4,7 @@ import {BookOpen,CalendarDays,Wallet,Archive,Plus,ChevronLeft,ChevronRight,Arrow
 import {type Data,type Lesson,type Payment,type Kind,type Status,names,statuses,money,today,iso,dateObj,addDays,fmtDate,minutes,fee,balance,overlaps,defaultLesson,validateLesson,validatePayment,parseBackup} from './domain';
 import {loadData,saveData} from './storage';
 import './style.css';
+import './glass.css';
 import {WeekScroll} from './WeekScroll';
 import {androidBridge,exportAndroidBackup} from './android';
 const desktop=Boolean(window.dersDefteri);

@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
  private String pendingExport; private boolean pageReady=false;
  @Override public void onCreate(Bundle state){
   super.onCreate(state);records=new RecordStore(this,"records.sqlite");
-  web=new WebView(this);web.setBackgroundColor(Color.rgb(242,244,247));setContentView(web);
+  web=new WebView(this);web.setBackgroundColor(Color.rgb(230,240,246));setContentView(web);
   WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG);
   WebSettings settings=web.getSettings();settings.setJavaScriptEnabled(true);settings.setDomStorageEnabled(true);
   settings.setAllowFileAccess(false);settings.setAllowContentAccess(true);settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);

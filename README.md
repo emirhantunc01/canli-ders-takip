@@ -84,3 +84,7 @@ npm run test:android:ui
 ```
 
 Telefon UI testi yalnızca `emulator-*` cihazını seçer; testten önceki emülatör kayıtlarını geri yükler. Native testler ayrı bir test veritabanı kullanır. Release APK'de WebView geliştirici bağlantısı kapalıdır. Kaynakların mobil varlık dosyaları üretildiği için Git'e dahil edilmez; derleme `dist/` çıktısını Android varlıklarına kopyalar. SHA256 kontrol dosyası APK yanında üretilir.
+
+## Glassmorphism güncellemesi (1.4)
+
+Android APK mevcut uygulamanın üzerine güncelleme olarak kurulabilir; versionCode artırılmıştır ve imza anahtarı aynıdır. Uygulamayı kaldırmadan yeni APK'yi kurun. Bu sürümde veri şeması değişmez. Yeni görünüm yarı saydam cam paneller, açık mavi/mint arka plan ve uyumlu diyalog/alt gezinme içerir; blur desteklenmeyen cihazlarda opak yüzeye geçer.
